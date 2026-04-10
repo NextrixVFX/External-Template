@@ -24,8 +24,7 @@ namespace External::Render
             if (m_render_target) { m_render_target->Release();  m_render_target = nullptr; }
             if (m_swap_chain) { m_swap_chain->Release();     m_swap_chain = nullptr; }
             if (m_device) { m_device->Release();         m_device = nullptr; }
-            // UI::Images::SetDevice(nullptr);
-
+			
             if (c_menu::m_mouse_hooked && c_menu::m_mouse_hook) {
                 UnhookWindowsHookEx(c_menu::m_mouse_hook);
                 c_menu::m_mouse_hook = nullptr;
@@ -129,8 +128,6 @@ namespace External::Render
                 return false;
             }
 
-            // UI::Images::SetDevice(m_device);
-
             return true;
         }
 
@@ -178,14 +175,14 @@ namespace External::Render
         }
 
     public:
-        static void start_rendering()
+        static void start_rendering(const std::string& window_name)
         {
             ImGui_ImplWin32_EnableDpiAwareness();
 
             RECT m_rect_cache{ 0 , 0 , 0 , 0 };
             MSG  m_msg{ 0 };
 
-            c_window::m_game_window = ::FindWindowA(NULL, encrypt("ROBLOX"));
+            c_window::m_game_window = ::FindWindowA(NULL, window_name);
 
             while (true)
             {
@@ -279,13 +276,15 @@ namespace External::Render
         // note: creates a thread
         static void initialize(const std::string& window_name)
         {
-            if (!c_window::create_window_binding(window_name))
-                return;
-
-            if (!create_device())
-                return;
-
-            std::thread([&] { start_rendering(); }).detach();
+            std::thread([&] { 
+				if (!c_window::create_window_binding(window_name))
+                	return;
+				
+				if (!create_device())
+                	return;
+				
+				start_rendering(window_name);
+			}).detach();
         }
 	};
 }
