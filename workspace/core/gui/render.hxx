@@ -182,7 +182,7 @@ namespace External::Render
             RECT m_rect_cache{ 0 , 0 , 0 , 0 };
             MSG  m_msg{ 0 };
 
-            c_window::m_game_window = ::FindWindowA(NULL, window_name);
+            c_window::m_game_window = ::FindWindowA(NULL, window_name.c_str());
 
             while (true)
             {
