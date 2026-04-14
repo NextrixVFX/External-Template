@@ -1,5 +1,5 @@
 # External-Template
-Template project for creating optimized and clean externals for any game with a focus on code quality and performace.
+Template project for creating optimized and clean externals for any game with a focus on code quality and performance.
 
 # Features
 - Feature Registration [on_update(), on_render()]
