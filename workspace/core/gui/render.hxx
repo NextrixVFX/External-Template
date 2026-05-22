@@ -276,7 +276,7 @@ namespace External::Render
         // note: creates a thread
         static void initialize(const std::string& window_name)
         {
-            std::thread([&] { 
+            std::thread([window_name] { 
 				if (!c_window::create_window_binding(window_name))
                 	return;
 				
